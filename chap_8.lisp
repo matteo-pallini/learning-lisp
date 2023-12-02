@@ -107,3 +107,14 @@
 ))
 
 (tail-rec-fact 7)
+
+(defun tree-find-if (fn x) (
+   cond ((null x) nil)
+	((and (numberp x) (funcall fn x)) x)
+	((and (numberp x) (not (funcall fn x))) nil)
+	(t (or (tree-find-if fn (car x))
+	       (tree-find-if fn (rest x))))
+))
+
+(tree-find-if #'oddp '((2 4) (5 6) 7))
+(tree-find-if #'oddp '((2 4) (2 6) 7))
